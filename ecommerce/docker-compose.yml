@@ -1,0 +1,22 @@
+services:
+  ecommerce_db:
+    container_name: 
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data/postgres
+    volumes:
+      - ecommerce_db:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - ecommerce_db
+    restart: unless-stopped
+
+networks:
+  ecommerce_db:
+    driver: bridge
+
+volumes:
+  ecommerce_db:
