@@ -44,7 +44,7 @@ public class Product {
     private BigDecimal price;
 
     @Min(0)
-    private int stock;
+    private Integer stock;
 
     @ManyToMany
     @JoinTable(

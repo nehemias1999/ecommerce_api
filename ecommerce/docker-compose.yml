@@ -1,6 +1,6 @@
 services:
   ecommerce_db:
-    container_name: 
+    container_name: postgres_ecommerce
     image: postgres:latest
     environment:
       POSTGRES_USER: postgres
@@ -9,7 +9,7 @@ services:
     volumes:
       - ecommerce_db:/data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - ecommerce_db
     restart: unless-stopped
