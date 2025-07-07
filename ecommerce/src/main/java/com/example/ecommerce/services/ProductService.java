@@ -8,12 +8,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ecommerce.DTOs.CategoryDTOIN;
-import com.example.ecommerce.DTOs.CategoryDTOOUT;
-import com.example.ecommerce.DTOs.ProductDTOIN;
-import com.example.ecommerce.DTOs.ProductDTOOUT;
-import com.example.ecommerce.entites.Category;
-import com.example.ecommerce.entites.Product;
+import com.example.ecommerce.model.DTOs.OUT.CategoryDTOOUT;
+import com.example.ecommerce.model.DTOs.OUT.ProductDTOOUT;
+import com.example.ecommerce.model.DTOs.IN.ProductDTOIN;
+import com.example.ecommerce.model.entites.Category;
+import com.example.ecommerce.model.entites.Product;
 import com.example.ecommerce.repositories.ICategoryRepository;
 import com.example.ecommerce.repositories.IProductRepository;
 
@@ -41,37 +40,45 @@ public class ProductService {
             .toList();
     }
 
-    @Transactional(readOnly = true)
-    public ProductDTOOUT findById(UUID id) {
-        return productRepository
-            .findById(id)
-            .map(this::createProductDTO)
-            .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
-    }
-
     @Transactional
-    public ProductDTOOUT create(ProductDTOIN productDTO) {
+    public ProductDTOOUT createProduct(ProductDTOIN productDTO) {
         Product product = createNewProduct(productDTO);
-        product = productRepository.save(product);
-        return createProductDTO(product);
+
+        Product insertedProduct = productRepository.save(product);
+
+        return createProductDTO(insertedProduct);
     }
 
     @Transactional
-    public ProductDTOOUT update(UUID id, ProductDTOIN productDTO) {
+    public ProductDTOOUT updateProduct(UUID id, ProductDTOIN productDTO) {
         Product product = productRepository
             .findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
 
         product = updateExistingProduct(product, productDTO);
 
-        product = productRepository.save(product);
-        return createProductDTO(product);
+        Product updatedProduct = productRepository.save(product);
+
+        return createProductDTO(updatedProduct);
     }
 
     @Transactional
-    public void delete(UUID id) {
-        productRepository
-            .deleteById(id);
+    public ProductDTOOUT deleteProduct(UUID id) {
+        Product product = productRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+
+        productRepository.deleteById(product.getId());
+
+        return createProductDTO(product);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductDTOOUT getProductById(UUID id) {
+        return productRepository
+            .findById(id)
+            .map(this::createProductDTO)
+            .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
     }
 
     private Product createNewProduct(ProductDTOIN productDTO) {

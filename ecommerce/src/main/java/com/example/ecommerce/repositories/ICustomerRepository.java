@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ecommerce.entites.Customer;
+import com.example.ecommerce.model.entites.Customer;
 
 public interface ICustomerRepository extends JpaRepository<Customer, UUID> {
 

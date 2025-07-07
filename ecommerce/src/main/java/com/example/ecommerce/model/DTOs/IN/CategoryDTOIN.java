@@ -1,8 +1,4 @@
-package com.example.ecommerce.DTOs;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+package com.example.ecommerce.model.DTOs.IN;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

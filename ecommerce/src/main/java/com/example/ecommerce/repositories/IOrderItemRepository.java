@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ecommerce.entites.OrderItem;
+import com.example.ecommerce.model.entites.OrderItem;
 
 public interface IOrderItemRepository extends JpaRepository<OrderItem, UUID> {
 

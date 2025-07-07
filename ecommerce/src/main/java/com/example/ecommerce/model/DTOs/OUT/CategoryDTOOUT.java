@@ -1,4 +1,4 @@
-package com.example.ecommerce.DTOs;
+package com.example.ecommerce.model.DTOs.OUT;
 
 import java.util.UUID;
 
